@@ -1,20 +1,15 @@
 package org.module_two.services.task;
 
 import lombok.extern.log4j.Log4j;
-import org.module_two.AppIsland;
 import org.module_two.entity.Island;
 import org.module_two.entity.IslandLocation;
 import org.module_two.entity.wildlife.Animal;
 import org.module_two.entity.wildlife.Plant;
 import org.module_two.entity.wildlife.herbivore.Herbivore;
-import org.module_two.services.IslandSimulationService;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static org.module_two.constants.JavaFXConstants.GAME_OVER;
 
 @Log4j
 public class AnimalEatTask implements Runnable{
@@ -80,13 +75,6 @@ public class AnimalEatTask implements Runnable{
                     indexH = 0;
                     indexW++;
                 }
-            }
-
-            if(Island.getInstance().countAnimalInIsland() == 0 || Island.getInstance().countPlantsInIsland() == 0){    //если все локации пусты на растения или животных
-                log.info(this.getClass() + " There are no animals or plants left on the island.");
-                AppIsland.getController().printStatistics(GAME_OVER);
-                IslandSimulationService.getInstance().getExecutorService().shutdown();
-                AppIsland.getController().getTime().cancel();
             }
 
             //гарантия, что зависимый поток, вызывающий await(), будет блокироваться до тех пор,

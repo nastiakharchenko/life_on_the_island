@@ -5,8 +5,8 @@ import org.module_two.services.FileService;
 import java.util.List;
 
 import static org.module_two.constants.ExeptionConstants.FILE_IS_INVALID;
-import static org.module_two.constants.SystemConstants.DASH;
-import static org.module_two.constants.SystemConstants.NO_DATA_IN_CELL;
+import static org.module_two.constants.SystemIslandConstants.DASH;
+import static org.module_two.constants.SystemIslandConstants.NO_DATA_IN_CELL;
 
 @Log4j
 public class GameInputStartData {

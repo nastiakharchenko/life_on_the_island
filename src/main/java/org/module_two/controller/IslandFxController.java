@@ -17,16 +17,13 @@ import org.module_two.AppIsland;
 import org.module_two.entity.Island;
 import org.module_two.entity.IslandLocation;
 import org.module_two.services.IslandSimulationService;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import static org.module_two.constants.AnimalAndPlantsConstants.PLANT;
 import static org.module_two.constants.AnimalAndPlantsConstants.UNICODE_ANIMALS_AND_PLANT;
 import static org.module_two.constants.JavaFXConstants.*;
-import static org.module_two.constants.SystemConstants.DURATION_SIMULATION_CYCLE;
 
 @Log4j
 public class IslandFxController {
@@ -96,7 +93,7 @@ public class IslandFxController {
             }
         };
         time = new Timer();
-        time.scheduleAtFixedRate(task,0, DURATION_SIMULATION_CYCLE * 1000); // * 1000 - чтобы перевести миллисекунды в секунды
+        time.scheduleAtFixedRate(task,0, IslandSimulationService.getInstance().getDurationSimulation().get() * 1000); // * 1000 - чтобы перевести миллисекунды в секунды
     }
 
     private void drawIsland(){

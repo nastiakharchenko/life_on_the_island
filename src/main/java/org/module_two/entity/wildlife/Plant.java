@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.module_two.entity.Island;
 
 import static org.module_two.constants.AnimalAndPlantsConstants.*;
-import static org.module_two.constants.SystemConstants.MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE;
+import static org.module_two.constants.SystemIslandConstants.MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE;
 
 @Getter
 public class Plant {

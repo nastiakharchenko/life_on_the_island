@@ -3,12 +3,10 @@ package org.module_two.entity.wildlife.predator;
 import lombok.Getter;
 import lombok.Setter;
 import org.module_two.entity.Island;
-import org.module_two.entity.IslandLocation;
 
 import java.util.HashMap;
 
 import static org.module_two.constants.AnimalAndPlantsConstants.*;
-import static org.module_two.constants.SystemConstants.*;
 
 @Getter
 public class Fox extends Predator {
@@ -36,15 +34,7 @@ public class Fox extends Predator {
 
     @Override
     public void reproduce(int indexWLocation, int indexHLocation) {
-        IslandLocation location = Island.getInstance().getLocation(indexWLocation, indexHLocation);
-        if(location.getCountAnimalSpecies(FOX) < (int) (Island.gameInputStartData.getCharacteristic(FOX
-                , MAX_COUNT_ANIMAL_OR_PLANT_INDEX_TABLE) * 0.9)){
-            location.addAnimal(FOX, new Fox(
-                    Island.gameInputStartData.getCharacteristic(FOX, MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE)
-                    , (int) Island.gameInputStartData.getCharacteristic(FOX, MOVEMENT_SPEED_PER_TURN_INDEX_TABLE)
-                    , Island.gameInputStartData.getCharacteristic(FOX, KILOGRAMS_FOOD_COMPLETE_SATIETY_INDEX_TABLE)
-                    , ANIMAL_MAX_HP));
-        }
+        super.reproduce(indexWLocation, indexHLocation);
     }
 
     @Override

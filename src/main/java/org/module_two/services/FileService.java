@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.module_two.constants.ExeptionConstants.*;
-import static org.module_two.constants.SystemConstants.SEMICOLON;
+import static org.module_two.constants.SystemIslandConstants.SEMICOLON;
 
 @Log4j
 public class FileService {

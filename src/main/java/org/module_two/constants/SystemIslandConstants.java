@@ -1,6 +1,6 @@
 package org.module_two.constants;
 
-public class SystemConstants {
+public class SystemIslandConstants {
     public static final String SEMICOLON = ";";
     public static final String NO_DATA_IN_CELL = "N/A";
     public static final String DASH = "-";
@@ -19,6 +19,6 @@ public class SystemConstants {
 
     public static final int DIRECTION_COUNT = 4;
 
-    public static int WIDTH_ISLAND = 20;
-    public static int LENGTH_ISLAND = 100;
+    public static final int WIDTH_ISLAND = 20;
+    public static final int LENGTH_ISLAND = 100;
 }

@@ -3,13 +3,11 @@ package org.module_two.entity.wildlife.predator;
 import lombok.Getter;
 import lombok.Setter;
 import org.module_two.entity.Island;
-import org.module_two.entity.IslandLocation;
 
 import java.util.HashMap;
 
 import static org.module_two.constants.AnimalAndPlantsConstants.*;
 import static org.module_two.constants.AnimalAndPlantsConstants.DUCK;
-import static org.module_two.constants.SystemConstants.*;
 
 @Getter
 public class Eagle extends Predator { //Орел
@@ -37,15 +35,7 @@ public class Eagle extends Predator { //Орел
 
     @Override
     public void reproduce(int indexWLocation, int indexHLocation) {
-        IslandLocation location = Island.getInstance().getLocation(indexWLocation, indexHLocation);
-        if(location.getCountAnimalSpecies(EAGLE) < (int) (Island.gameInputStartData.getCharacteristic(EAGLE
-                , MAX_COUNT_ANIMAL_OR_PLANT_INDEX_TABLE) * 0.9)){
-            location.addAnimal(EAGLE, new Eagle(
-                    Island.gameInputStartData.getCharacteristic(EAGLE, MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE)
-                    , (int) Island.gameInputStartData.getCharacteristic(EAGLE, MOVEMENT_SPEED_PER_TURN_INDEX_TABLE)
-                    , Island.gameInputStartData.getCharacteristic(EAGLE, KILOGRAMS_FOOD_COMPLETE_SATIETY_INDEX_TABLE)
-                    , ANIMAL_MAX_HP));
-        }
+        super.reproduce(indexWLocation, indexHLocation);
     }
 
     @Override

@@ -5,12 +5,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.module_two.entity.Island;
 import org.module_two.services.IslandSimulationService;
 import org.module_two.view.DialogToUser;
 
 import static org.module_two.constants.ExeptionConstants.*;
-import static org.module_two.constants.SystemConstants.*;
+import static org.module_two.constants.SystemIslandConstants.*;
 
 @Log4j
 public class ChangeIslandParametersController {
@@ -39,14 +38,14 @@ public class ChangeIslandParametersController {
             if(width <= 0 || width > 100) {
                 DialogToUser.exceptionShow(ATTENTION, INCORRECT_VALUE, "Значення кількості рядків не може перевищувати 100 та бути меншим за 0");
             } else{
-                WIDTH_ISLAND = width;
+                IslandSimulationService.getInstance().getWidthIsland().set(width);
                 statusChangeW = true;
             }
             int height = Integer.parseInt(islandHeight.getText());
             if(height <= 0 || height > 100) {
                 DialogToUser.exceptionShow(ATTENTION, INCORRECT_VALUE, "Значення кількості стовпців не може перевищувати 100 та бути меншим за 0");
             } else{
-                LENGTH_ISLAND = height;
+                IslandSimulationService.getInstance().getLengthIsland().set(height);
                 statusChangeH = true;
             }
             int duration = Integer.parseInt(durationSimulation.getText());

@@ -10,11 +10,10 @@ import org.module_two.services.task.PlantGrowthTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.module_two.constants.SystemConstants.DURATION_SIMULATION_CYCLE;
+import static org.module_two.constants.SystemIslandConstants.*;
 
 public class IslandSimulationService {
     private static volatile IslandSimulationService islandSimulation;
@@ -22,6 +21,10 @@ public class IslandSimulationService {
     private volatile ScheduledExecutorService executorService;
     @Getter
     private AtomicInteger countDay = new AtomicInteger(0);
+    @Getter
+    private AtomicInteger widthIsland = new AtomicInteger(WIDTH_ISLAND);
+    @Getter
+    private AtomicInteger lengthIsland = new AtomicInteger(LENGTH_ISLAND);
     @Getter
     private AtomicLong durationSimulation = new AtomicLong(DURATION_SIMULATION_CYCLE);
 

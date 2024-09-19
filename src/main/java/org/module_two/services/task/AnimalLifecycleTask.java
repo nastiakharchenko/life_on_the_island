@@ -22,7 +22,7 @@ public class AnimalLifecycleTask implements Runnable{
         ExecutorService executorService = Executors.newFixedThreadPool(3);
         executorService.submit(animalEatTask);          //отправляем задачу кушать
         executorService.submit(animalReproduceTask);    //отправляем задачу размножения
-        executorService.submit(animalMovementTask);   //отправляем задачу движения
+        executorService.submit(animalMovementTask);     //отправляем задачу движения
         try {
             latch.await();      //ожидание обнуления счетчика (выполнение countDown())
         } catch (InterruptedException e) {

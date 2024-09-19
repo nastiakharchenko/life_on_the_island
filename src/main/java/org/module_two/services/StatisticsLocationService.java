@@ -1,11 +1,9 @@
 package org.module_two.services;
 
 import org.module_two.entity.wildlife.Plant;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import static org.module_two.constants.AnimalAndPlantsConstants.*;
 
 public class StatisticsLocationService {

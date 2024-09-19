@@ -24,7 +24,7 @@ public class AnimalMovementTask implements Runnable{
             for (List<IslandLocation> locationRow : Island.getInstance().getLocations()){     //строки матрицы-острова
                 for (IslandLocation location : locationRow){                                  //столбцы
                     for(Map.Entry<Integer, List<Animal>> species : location.getAnimals().entrySet()){   //все животные локации
-                        int countAnimalSpecies = species.getValue().size();
+                        int countAnimalSpecies = species.getValue().size();     //получение количества животных конкретного вида
                         if(countAnimalSpecies > 0){
                             int percentReproduce = (int) (countAnimalSpecies * 0.25);    //разрешаем передвигаться только 25% животных каждого вида
                             List<Animal> animalsForReproduce = species.getValue();

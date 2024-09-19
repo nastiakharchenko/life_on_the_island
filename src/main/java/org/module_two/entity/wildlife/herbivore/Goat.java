@@ -3,12 +3,10 @@ package org.module_two.entity.wildlife.herbivore;
 import lombok.Getter;
 import lombok.Setter;
 import org.module_two.entity.Island;
-import org.module_two.entity.IslandLocation;
 
 import java.util.HashMap;
 
 import static org.module_two.constants.AnimalAndPlantsConstants.*;
-import static org.module_two.constants.SystemConstants.*;
 
 @Getter
 public class Goat extends Herbivore {     //Коза
@@ -35,15 +33,7 @@ public class Goat extends Herbivore {     //Коза
 
     @Override
     public void reproduce(int indexWLocation, int indexHLocation) {
-        IslandLocation location = Island.getInstance().getLocation(indexWLocation, indexHLocation);
-        if(location.getCountAnimalSpecies(GOAT) < (int) (Island.gameInputStartData.getCharacteristic(GOAT
-                , MAX_COUNT_ANIMAL_OR_PLANT_INDEX_TABLE) * 0.9)){
-            location.addAnimal(GOAT, new Goat(
-                    Island.gameInputStartData.getCharacteristic(GOAT, MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE)
-                    , (int) Island.gameInputStartData.getCharacteristic(GOAT, MOVEMENT_SPEED_PER_TURN_INDEX_TABLE)
-                    , Island.gameInputStartData.getCharacteristic(GOAT, KILOGRAMS_FOOD_COMPLETE_SATIETY_INDEX_TABLE)
-                    , ANIMAL_MAX_HP));
-        }
+        super.reproduce(indexWLocation, indexHLocation);
     }
 
     @Override

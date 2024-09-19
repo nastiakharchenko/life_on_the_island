@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.module_two.entity.Island;
+import org.module_two.entity.IslandLocation;
 import org.module_two.entity.wildlife.Animal;
 import org.module_two.services.ComplianceIndexAnimalService;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
-import static org.module_two.constants.SystemConstants.*;
+
+import static org.module_two.constants.SystemIslandConstants.*;
 
 @Log4j
 @Getter
@@ -54,6 +56,12 @@ public class Predator implements Animal, Cloneable {
 
     @Override
     public void reproduce(int indexWLocation, int indexHLocation) {
+        IslandLocation location = Island.getInstance().getLocation(indexWLocation, indexHLocation);
+        int indexAnimal = ComplianceIndexAnimalService.getIndexAnimalsAndPlant(this.getClass().getSimpleName());
+        if(location.getCountAnimalSpecies(indexAnimal) < (int) (Island.gameInputStartData.getCharacteristic(indexAnimal
+                , MAX_COUNT_ANIMAL_OR_PLANT_INDEX_TABLE) * 0.9)){
+            location.addAnimal(indexAnimal, ComplianceIndexAnimalService.getObjectAnimalBySpecies(indexAnimal));
+        }
     }
 
     @Override
@@ -64,7 +72,7 @@ public class Predator implements Animal, Cloneable {
                 break;
             }
 
-            int direction = ThreadLocalRandom.current().nextInt( 0, DIRECTION_COUNT);
+            int direction = ThreadLocalRandom.current().nextInt(0, DIRECTION_COUNT);
             int countStepDirection = ThreadLocalRandom.current().nextInt( 0, movementSpeed + 1);
 
             int stepHor, stepVert;

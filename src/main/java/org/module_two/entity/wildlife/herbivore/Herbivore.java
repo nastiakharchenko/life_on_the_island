@@ -12,7 +12,7 @@ import org.module_two.services.ComplianceIndexAnimalService;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static org.module_two.constants.SystemConstants.*;
+import static org.module_two.constants.SystemIslandConstants.*;
 
 @Log4j
 @Getter
@@ -40,26 +40,19 @@ public class Herbivore implements Animal, Cloneable {
             if(o instanceof Plant){
                 int index = ComplianceIndexAnimalService.getIndexAnimalsAndPlant(o.getClass().getSimpleName());
                 double weightSacrifice = Island.gameInputStartData.getCharacteristic(index, MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE);
-
                 location.deletePlant((Plant) o);
-
                 this.setHp(weightSacrifice >= kgForSatiety ? ANIMAL_MAX_HP : (int) (this.getHp() + ((weightSacrifice < 1.0) ? 1 : weightSacrifice)));
-                //hp = weightSacrifice >= kgForSatiety ? ANIMAL_MAX_HP : (int) (hp + ((weightSacrifice < 1.0) ? 1 : weightSacrifice));
                 return true;
             } else if(o instanceof Animal){
                 if(((Animal) o).getHp() > 0){
                     int index = ComplianceIndexAnimalService.getIndexAnimalsAndPlant(o.getClass().getSimpleName());
                     Double percent = probabilityEat.get(index);
                     if(percent != null){
-
                         if(ThreadLocalRandom.current().nextDouble() >= percent){
                             double weightSacrifice = Island.gameInputStartData.getCharacteristic(index
                                     , MAX_WEIGHT_ANIMAL_OR_PLANT_INDEX_TABLE);
-
                             ((Animal) o).setHp(-1);
-
                             this.setHp(weightSacrifice >= kgForSatiety ? ANIMAL_MAX_HP : (int) (this.getHp() + ((weightSacrifice < 1.0) ? 1 : weightSacrifice)));
-                            //hp = weightSacrifice >= kgForSatiety ? ANIMAL_MAX_HP : (int) (hp + ((weightSacrifice < 1.0) ? 1 : weightSacrifice));
                             return true;
                         }
                     }
@@ -71,6 +64,12 @@ public class Herbivore implements Animal, Cloneable {
 
     @Override
     public void reproduce(int indexWLocation, int indexHLocation) {
+        IslandLocation location = Island.getInstance().getLocation(indexWLocation, indexHLocation);
+        int indexAnimal = ComplianceIndexAnimalService.getIndexAnimalsAndPlant(this.getClass().getSimpleName());
+        if(location.getCountAnimalSpecies(indexAnimal) < (int) (Island.gameInputStartData.getCharacteristic(indexAnimal
+                , MAX_COUNT_ANIMAL_OR_PLANT_INDEX_TABLE) * 0.9)){
+            location.addAnimal(indexAnimal, ComplianceIndexAnimalService.getObjectAnimalBySpecies(indexAnimal));
+        }
     }
 
     @Override

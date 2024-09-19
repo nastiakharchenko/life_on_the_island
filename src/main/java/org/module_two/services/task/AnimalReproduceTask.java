@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-import static org.module_two.constants.SystemConstants.ANIMAL_HUNGRY_PERCENT;
+import static org.module_two.constants.SystemIslandConstants.ANIMAL_HUNGRY_PERCENT;
 
 @Log4j
 public class AnimalReproduceTask implements Runnable{

@@ -2,33 +2,34 @@ package org.module_two.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.module_two.services.IslandSimulationService;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.module_two.constants.SystemConstants.*;
+import static org.module_two.constants.SystemIslandConstants.*;
 import static org.module_two.constants.FileNameConstants.FILE_CHARACTERISTICS_ANIMAL;
 import static org.module_two.constants.FileNameConstants.FILE_PROBABILITY_EAT;
 
 public class Island{
     public static GameInputStartData gameInputStartData;
     @Getter
-    private int mapWidth = WIDTH_ISLAND;
+    private int mapWidth = IslandSimulationService.getInstance().getWidthIsland().get();
     @Getter
-    private int mapLength = LENGTH_ISLAND;
+    private int mapLength = IslandSimulationService.getInstance().getLengthIsland().get();
     @Getter
     @Setter
     private List<List<IslandLocation>> locations;
-    private static volatile Island island;
+    private static volatile Island island;  //гарантия, что значение переменной будет сразу же записано
+                                            // в основную память, а не в кэш процессора, и любые другие потоки
+                                            // будут видеть это обновленное значение
 
     private Island() {
         gameInputStartData = new GameInputStartData(FILE_CHARACTERISTICS_ANIMAL, FILE_PROBABILITY_EAT);
-        locations = new ArrayList<>();
+        locations = new CopyOnWriteArrayList<>();
         for (int i = 0; i < mapWidth; i++) {
-            List<IslandLocation> location = new ArrayList<>();
+            List<IslandLocation> location = new CopyOnWriteArrayList<>();
             for (int j = 0; j < mapLength; j++) {
                 location.add(new IslandLocation(i, j));
             }
@@ -51,6 +52,9 @@ public class Island{
         return locations.get(indexWidth).get(indexLength);
     }
 
+    /*
+     * Рост растений на процентное соотношение PLANT_PERCENT_REPRODUCE
+     * */
     public void plantGrowthInIsland(){
         for (List<IslandLocation> loc: locations){
             for (IslandLocation islandLocation : loc){
@@ -59,6 +63,9 @@ public class Island{
         }
     }
 
+    /*
+     * Получаем значение количества растений на острове
+     * */
     public int countPlantsInIsland(){
         int count = 0;
         for (List<IslandLocation> islandLocations : locations){
@@ -69,6 +76,9 @@ public class Island{
         return count;
     }
 
+    /*
+     * Получаем значение количества животных на острове
+     * */
     public int countAnimalInIsland(){
         int count = 0;
         for (List<IslandLocation> islandLocations : locations){
@@ -79,6 +89,9 @@ public class Island{
         return count;
     }
 
+    /*
+    * Получаем Map количества особей видов животных на острове
+    * */
     public Map<Integer, Integer> countSpeciesAnimalInIsland(){
         Map<Integer, Integer> countSpeciesAnimalInIsland = new ConcurrentHashMap<>();
         int[] countAnimal = new int[15];
