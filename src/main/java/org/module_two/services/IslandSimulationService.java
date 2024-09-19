@@ -55,7 +55,7 @@ public class IslandSimulationService {
         executorService.scheduleAtFixedRate(animalReproduceTask, 0, durationSimulationRegular, TimeUnit.SECONDS);
         executorService.scheduleAtFixedRate(animalMovementTask, 0, durationSimulationRegular, TimeUnit.SECONDS);
         try {
-            latch.await();      //ожидание обнуления счетчика
+            latch.await();      //ожидание обнуления счетчика ( countDown() )
         } catch (InterruptedException e) {
             log.error(this.getClass() + " " + e.getMessage());
             throw new RuntimeException(e);
