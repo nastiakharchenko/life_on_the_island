@@ -38,30 +38,18 @@ public class IslandSimulationService {
     }
 
     public void run() {
-        executorService = Executors.newScheduledThreadPool(6);
+        executorService = Executors.newScheduledThreadPool(4);
 
-        CountDownLatch latch = new CountDownLatch(3);   //средство синхронизации, позволяющее одному
-                                                        // или нескольким потокам ожидать завершения набора операций,
-                                                        // выполняемых в других потоках
-        AnimalEatTask animalEatTask = new AnimalEatTask(latch);
-        AnimalReproduceTask animalReproduceTask = new AnimalReproduceTask(latch);
-        AnimalMovementTask animalMovementTask = new AnimalMovementTask(latch);
-        AnimalHpControlTask animalHpControlTask = new AnimalHpControlTask();
+        AnimalLifecycleTask animalLifecycleTask = new AnimalLifecycleTask();
         PlantGrowthTask plantGrowthTask = new PlantGrowthTask();
         IslandStatisticsTask islandStatisticsTask = new IslandStatisticsTask();
+        AnimalHpControlTask animalHpControlTask = new AnimalHpControlTask();
 
-        long durationSimulationRegular = durationSimulation.get() / 3 == 0 ? 1 : durationSimulation.get() / 3;          //3 раза в условные сутки
-        executorService.scheduleAtFixedRate(animalEatTask, 0, durationSimulationRegular, TimeUnit.SECONDS);
-        executorService.scheduleAtFixedRate(animalReproduceTask, 0, durationSimulationRegular, TimeUnit.SECONDS);
-        executorService.scheduleAtFixedRate(animalMovementTask, 0, durationSimulationRegular, TimeUnit.SECONDS);
-        try {
-            latch.await();      //ожидание обнуления счетчика ( countDown() )
-        } catch (InterruptedException e) {
-            log.error(this.getClass() + " " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        executorService.scheduleAtFixedRate(animalHpControlTask, 0, durationSimulation.get(), TimeUnit.SECONDS);  //раз в сутки
+        executorService.scheduleAtFixedRate(animalLifecycleTask, 0
+                , durationSimulation.get() / 3 == 0 ? 1 : durationSimulation.get() / 3
+                , TimeUnit.SECONDS);                                                                                        //3 раза в сутки
         executorService.scheduleAtFixedRate(plantGrowthTask, 0, durationSimulation.get(), TimeUnit.SECONDS);      //раз в сутки
         executorService.scheduleAtFixedRate(islandStatisticsTask, 0, durationSimulation.get(), TimeUnit.SECONDS); //раз в сутки
+        executorService.scheduleAtFixedRate(animalHpControlTask, 0, durationSimulation.get(), TimeUnit.SECONDS);  //раз в сутки
     }
 }
